@@ -1,0 +1,13 @@
+{
+  "name": "@kvinc/vue-source-parse",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "start": "yarn dev",
+    "build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "cjd <459953103@qq.com> (http://github.com/GloomySunday28)",
+  "license": "MIT"
+}
