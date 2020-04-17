@@ -2,6 +2,8 @@ module.exports = {
   title: 'Mr.Cai - Vue Source Instroduce',
   description: 'Vue Source Instroduce',
   themeConfig: {
+    displayAllHeaders: true, // 默认值：false
+    sidebarDepth: 2,
     locales: {
       // 键名是该语言所属的子路径
       // 作为特例，默认语言可以使用 '/' 作为其路径。
@@ -23,9 +25,24 @@ module.exports = {
           { text: 'GitHub', link: 'https://github.com/Gloomysunday28' },
         ],
         sidebar: [
-          ['/', '介绍'],
-          ['/vue/', 'Vue']
-        ],
+          {
+            title: '介绍',   // 必要的
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/'
+            ]
+          },
+          {
+            title: 'Vue',
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/vue/',
+              '/vue/initGlobalAPI/'
+            ]
+          }
+        ]
       },
     }
   }
