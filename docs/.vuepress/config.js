@@ -43,7 +43,7 @@ module.exports = {
             ]
           },
           {
-            title: '组件导言',
+            title: '深入组件',
             collapsable: false, // 可选的, 默认值是 true,
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
