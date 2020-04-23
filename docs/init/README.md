@@ -55,3 +55,7 @@
   };
 ```
 以上是_init函数的所有内容也就是Vue实例化时做的所有的事, 看起来比较多，我们直接调重点来详细讲解~
+::: tip
+  - <font-bold>initLifecycle - callHook(vm, 'created')</font-bold>我会在组件篇里说明
+  - <font-bold>vm.$mount是挂载Vue实例的入口函数</font-bold>, 具体我也会在组件篇的patch章节详细说明
+:::

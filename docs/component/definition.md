@@ -80,7 +80,7 @@ render函数返回的是vnode, 也就是说createElement是返回vnode, 组件Vn
 ```
 这里我列举出创建组件Vnode时需要的code, createComponent是用来创建componentVnode,所以我们具体看下该函数的实现
 
-### createComponent
+## createComponent
 ```js
   function createComponent (
     Ctor,
@@ -182,13 +182,13 @@ render函数返回的是vnode, 也就是说createElement是返回vnode, 组件Vn
   }
 ```
 总结下来createComponent函数做了以下四件事
-1. 还记得第一章全局API调用时的_base属性吗，该属性指向的是Vue, 所以第一步就是创建Vue的子类
+1. 还记得第一章全局API调用时的_base属性吗，该属性指向的是Vue, 所以第一步<font-bold>调用Vue.extend</font-bold>就是创建Vue的子类
 2. 第二步调用resolveConstructorOptions函数来合并options
 3. 根据<font-bold>data.props与options.props</font-bold>返回propsData
 4. installComponentHooks函数注册组件的钩子函数 <font-bold>componentVnodeHooks</font-bold>, 这里可以自定义钩子函数
 5. 创建组件Vnode, 传入Ctor, propsData, listeners, children, tag给到vnode.componentOptions
 
-### Vue.extend
+## Vue.extend
 通过刚才我们了解组件函数都是通过Vue.extend出来的, 那么Vue.extend内部究竟是怎么样的？
 我们具体看下Vue.extend
 ```js

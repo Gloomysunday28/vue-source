@@ -55,7 +55,7 @@ module.exports = {
             ]
           },
           {
-            title: '初始化',
+            title: 'Vue初始化',
             collapsable: false, // 可选的, 默认值是 true,
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
@@ -70,6 +70,8 @@ module.exports = {
             children: [
               '/component/',
               '/component/definition',
+              '/component/patch',
+              '/component/init',
             ]
           }
         ],
