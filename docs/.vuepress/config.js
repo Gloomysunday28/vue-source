@@ -1,6 +1,7 @@
 module.exports = {
   title: 'Mr.Cai - Vue Source Instroduce',
   description: 'Vue Source Instroduce',
+  base: './',
   themeConfig: {
     displayAllHeaders: true, // 默认值：false
     sidebarDepth: 2,
