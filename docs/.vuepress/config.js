@@ -23,8 +23,44 @@ module.exports = {
           { text: 'GitHub', link: 'https://github.com/Gloomysunday28' },
         ],
         sidebar: [
-          ['/', '介绍'],
-          ['/vue/', 'Vue']
+          {
+            title: '介绍',   // 必要的
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/'
+            ]
+          },
+          {
+            title: 'Vue全局API',
+            collapsable: false,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/initGlobalAPI/',
+              '/initGlobalAPI/assertTypes',
+              '/initGlobalAPI/builtInComponents',
+              '/initGlobalAPI/initUse',
+              '/initGlobalAPI/initMixin',
+              '/initGlobalAPI/toSumUp',
+            ]
+          },
+          {
+            title: 'Vue函数',
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/vue/',
+            ]
+          },
+          {
+            title: '初始化',
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/init/',
+              '/init/mergeOptions'
+            ]
+          },
         ],
       },
     }
