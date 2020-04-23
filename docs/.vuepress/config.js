@@ -39,7 +39,16 @@ module.exports = {
             sidebarDepth: 1,    // 可选的, 默认值是 1
             children: [
               '/vue/',
-              '/vue/initGlobalAPI/'
+              '/vue/initGlobalAPI'
+            ]
+          },
+          {
+            title: '组件导言',
+            collapsable: false, // 可选的, 默认值是 true,
+            sidebarDepth: 1,    // 可选的, 默认值是 1
+            children: [
+              '/component/',
+              '/component/definition',
             ]
           }
         ]
