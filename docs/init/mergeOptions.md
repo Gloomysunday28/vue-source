@@ -400,7 +400,7 @@ options[key]都是根据刚才strats定义的函数处理后生成的, 最终形
 ```
 以上就是mergeOptions在Vue实例化时最终返回的options, vm.$options其实是Vue.options扩展
 
-## 扩展
+### 扩展
 我们都知道vue-router也提供了几个生命周期 - beforeRouteLeave、beforeRouteEnter
 它们的处理方式其实在注册时是这样写的:
 ```js
@@ -409,7 +409,7 @@ options[key]都是根据刚才strats定义的函数处理后生成的, 最终形
 ```
 这里vue-router就将这些生命周期也定位成数组形式
 
-## 总结
+### 总结
 mergeOptions的调用会出现在五种情况下:
 1. Vue实例调用
 2. Vue.mixin函数调用

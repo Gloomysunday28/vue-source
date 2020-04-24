@@ -433,8 +433,10 @@ vm.$el = vm.__patch__(...), __patch__函数返回的是根节点的真实节点,
 ```
 我们知道createElm的时候会调用普通dom节点createChildren去循环调用createElm, 那么Children就是div的子节点，div就是Children的parentElm, Children会将根节点插入到div下形成一个闭环
 
-## 总结
+### 总结
 本章节说的其实挺多的，从$mount挂载函数介绍到patch函数的调用到最后的组件挂载插入到dom节点里, 仔细再回顾下这章节的内容
 
-## 追问
+### 追问
+::: tip 疑问一
 - 1. activeInstance为什么是全局变量?
+::: 

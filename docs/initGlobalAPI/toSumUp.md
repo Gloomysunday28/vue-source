@@ -1,4 +1,5 @@
 # 总结
+
 Vue函数下具有很多全局的api, 运用的不错可以完成挺多的意想不到的功能<font-bold>(当然有些东西需要放到对应的模块里去讲比较合适)</font-bold>,本篇文章来再次回顾下之前讲的一些东西
 ::: tip Vue.config
   通过之前的介绍我们知道config下存了很多属性, 最重要的有两个<font-bold color="blue">optionMergeStrategies</font-bold>、<font-bold color="blue">_lifecycleHooks</font-bold>, 他们的作用我会在之后对应的模块里讲到

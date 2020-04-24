@@ -17,5 +17,5 @@
 ```
 keep-alive组件应该都不陌生吧~, 该组件的作用是用来缓存内部组件, initGlobalAPI函数就是将keep-alive注册到Vue.options.component里
 
-## 总结
+### 总结
 initGlobalAPI会将keep-alive内部组件注册到Vue.options.components下，那么正如一开始的疑问，<font-bold>为什么我们可以直接访问呢？</font-bold>带着这个问题继续往下读

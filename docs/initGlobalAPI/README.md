@@ -52,7 +52,7 @@
   }
 ```
 
-## config
+### config
 ```js {6}
   var config = ({
     /**
@@ -158,7 +158,7 @@
 顾名思义 - 生命周期集合(内部还具有errorCaptrued等等，在接下来我们会说到它的作用到底是什么？)
 :::
 
-## util
+### util
 ```js
   Vue.util = {
     warn: warn,
@@ -183,7 +183,7 @@
 ::: tip 以下涉及的模块不同
 以下这些都是会分布在各个模块里会去说到，这里就不详细介绍了
 :::
-## set
-## del
-## nextTick
-## observable
+### set
+### del
+### nextTick
+### observable

@@ -72,10 +72,10 @@ ASSERT_TYPES定义在全局运行环境下，我们先看下它的定义
 - 若存在, 对于component属性首先进行名字的合法判断(<font-bold>开头必须是字母, 后面跟着数字、.、-符合即可，其余的是非法名称</font-bold>), 当第二个参数为纯对象时，对组件选项name进行处理(优先选择选项中的名称, 其次是第一个参数ID), this.options._base我们在上一篇已经讲到了(<font-bold>Vue.options._base = Vue</font-bold>), Vue.extend我们留到分析组件时再讲, 目前说下它返回的是Vue子类
 - 最后返回将第二个参数赋值给对应的Vue.options[type + 's'][id]上
 
-## 总结
+### 总结
 本篇讲解了全局component、directive、filter是怎么初始化并且注册全局函数的，希望本篇对大家有所帮助
 
-## 追加疑问
+### 追加疑问
 ::: tip 疑问一
   在初始化Vue.component函数时, Vue考虑到我们可能没有定义组件选项里name属性并且帮助我们初始化了一个值
   那么<font-bold color="blue">name属性有这么重要吗? 请大家带着这个疑问</font-bold>

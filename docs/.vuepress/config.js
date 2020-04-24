@@ -73,6 +73,9 @@ module.exports = {
               '/component/definition',
               '/component/patch',
               '/component/init',
+              '/component/lifecycle',
+              '/component/async',
+              '/component/functional',
             ]
           }
         ],
