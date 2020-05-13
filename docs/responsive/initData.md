@@ -565,6 +565,9 @@ addDep就是Watcher下的方法
 ```
 这里就是触发重新渲染Watcher依赖的地方, run方法就是重新执行依赖函数, 通常我们会执行queueWatcher函数, 这个函数在nextTick章节会详细说明, 这里我们只需要知道update就是去重新调用依赖函数
 
+### 派发更新queueWatcher
+
+
 至此, 对象依赖收集以及派发更新讲解完成, 下面我们再回到Observer函数去讲解数组是怎么处理的
 
 ### Observer

@@ -85,6 +85,7 @@ module.exports = {
             children: [
               '/responsive/',
               '/responsive/initData',
+              '/responsive/nextTick',
             ]
           }
         ],
