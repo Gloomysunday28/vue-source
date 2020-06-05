@@ -113,9 +113,9 @@ nextTick就是去执行timeFunc, 我们看下timeFunc的定义
 4. setTimeout
 
 ### 获取最新DOM
-仔细阅读过上面微任务与渲染的调用时机之后, 我们肯定会有一个疑问, 渲染明明是在微任务之后调用, 那么Vue是如何在nextTick里取到最新的Dom呢?
+仔细阅读过上面微任务与渲染的调用时机之后, 我们肯定会有一个疑问, 渲染明明是在微任务之后调用, <font-bold>那么Vue是如何在nextTick里取到最新的Dom呢?</font-bold>
 
 我们首先得知道浏览器是根据renderTree去渲染的, 而renderTree是由DomTree与CssTree结合起来, 我们通过js获取的Dom节点是来自DomTree, 而DomTree是<font-bold>实时更新的</font-bold>, 它与渲染机制不同, 上面的100次循环例子每次都会在DomTree上更新, 结合Vue在nextTick里进行数据派发更新, 我们就可以得出nextTick里为什么可以获取到最新Dom的原因了
 
 ### 总结
-本节在介绍nextTick的时候顺便讲解了相关的EventLoop与浏览器渲染机制, 这些都是可以更好的帮助我们理解为什么Vue要使用nextTick这个函数, 下一节Props
+本节在介绍nextTick的时候顺便讲解了相关的EventLoop与浏览器渲染机制, 这些都是可以更好的帮助我们理解为什么Vue要使用nextTick这个函数, 下一节computed

@@ -1,4 +1,4 @@
-# 初始化data数据
+# 响应式数据核心原理
 我们回到一开始的_init方法
 ```js {4-8}
    Vue.prototype._init = function (options) {
@@ -221,7 +221,7 @@ Dep: 依赖收集类, 之后会讲到
     });
   }
 ```
-这里有个childOb = !shallow && observe(val), 这里是用来将对象深度响应
+这里有个childOb = !shallow && observe(val), 这里是用来将对象深度响应, 这就是为什么data里的对象属性更改也会触发渲染
 
 ::: tip 响应式核心代码
   get() { // 收集依赖的地方
@@ -310,92 +310,23 @@ Dep: 依赖收集类, 之后会讲到
     this.newDepIds = new _Set();
     this.expression = expOrFn.toString();
     // parse expression for getter
-  if (typeof expOrFn === 'function') {
-    this.getter = expOrFn;
-  } else {
-    this.getter = parsePath(expOrFn);
-    if (!this.getter) {
-      this.getter = noop;
-      warn(
-        "Failed watching path: \"" + expOrFn + "\" " +
-        'Watcher only accepts simple dot-delimited paths. ' +
-        'For full control, use a function instead.',
-        vm
-      );
+    if (typeof expOrFn === 'function') {
+      this.getter = expOrFn;
+    } else {
+      this.getter = parsePath(expOrFn);
+      if (!this.getter) {
+        this.getter = noop;
+        warn(
+          "Failed watching path: \"" + expOrFn + "\" " +
+          'Watcher only accepts simple dot-delimited paths. ' +
+          'For full control, use a function instead.',
+          vm
+        );
+      }
     }
-  }
     this.value = this.lazy
       ? undefined
       : this.get();
-  };
-
-  /**
-   * Scheduler job interface.
-   * Will be called by the scheduler.
-   */
-  Watcher.prototype.run = function run () {
-    if (this.active) {
-      var value = this.get();
-      if (
-        value !== this.value ||
-        // Deep watchers and watchers on Object/Arrays should fire even
-        // when the value is the same, because the value may
-        // have mutated.
-        isObject(value) ||
-        this.deep
-      ) {
-        // set new value
-        var oldValue = this.value;
-        this.value = value;
-        if (this.user) {
-          try {
-            this.cb.call(this.vm, value, oldValue);
-          } catch (e) {
-            handleError(e, this.vm, ("callback for watcher \"" + (this.expression) + "\""));
-          }
-        } else {
-          this.cb.call(this.vm, value, oldValue);
-        }
-      }
-    }
-  };
-
-  /**
-   * Evaluate the value of the watcher.
-   * This only gets called for lazy watchers.
-   */
-  Watcher.prototype.evaluate = function evaluate () {
-    this.value = this.get();
-    this.dirty = false;
-  };
-
-  /**
-   * Depend on all deps collected by this watcher.
-   */
-  Watcher.prototype.depend = function depend () {
-    var i = this.deps.length;
-    while (i--) {
-      this.deps[i].depend();
-    }
-  };
-
-    /**
-    * Remove self from all dependencies' subscriber list.
-    */
-  Watcher.prototype.teardown = function teardown () {
-    if (this.active) {
-      // remove self from vm's watcher list
-      // this is a somewhat expensive operation so we skip it
-      // if the vm is being destroyed.
-      if (!this.vm._isBeingDestroyed) {
-        remove(this.vm._watchers, this);
-      }
-      var i = this.deps.length;
-      while (i--) {
-        this.deps[i].removeSub(this);
-      }
-      this.active = false;
-    }
   };
 ```
 
@@ -563,10 +494,144 @@ addDep就是Watcher下的方法
     }
   };
 ```
-这里就是触发重新渲染Watcher依赖的地方, run方法就是重新执行依赖函数, 通常我们会执行queueWatcher函数, 这个函数在nextTick章节会详细说明, 这里我们只需要知道update就是去重新调用依赖函数
+这里就是触发重新渲染Watcher依赖的地方, run方法就是重新执行依赖函数, 通常我们会执行queueWatcher函数, 所以我们从该函数入手去讲解
 
 ### 派发更新queueWatcher
+```js
+  function queueWatcher (watcher) {
+    var id = watcher.id;
+    if (has[id] == null) {
+      has[id] = true;
+      if (!flushing) {
+        queue.push(watcher);
+      } else {
+        // if already flushing, splice the watcher based on its id
+        // if already past its id, it will be run next immediately.
+        var i = queue.length - 1;
+        while (i > index && queue[i].id > watcher.id) {
+          i--;
+        }
+        queue.splice(i + 1, 0, watcher);
+      }
+      // queue the flush
+      if (!waiting) {
+        waiting = true;
 
+        if (!config.async) {
+          flushSchedulerQueue();
+          return
+        }
+        nextTick(flushSchedulerQueue);
+      }
+    }
+  }
+```
+::: tip 属性分析
+  queue: 存储触发更新的Watcher集合
+  flushing: 表示正在处理Watcher集合的更新, 若还未开始, 则一直往集合添加, 若已开始, 那么将通过watcher.id进行排序, watcher创建越早, id越小, Vue需要将watcher按照创建时间去处理,
+  index: 当前执行的Watcher, 新添加的Watcher不能在当前Watcher之前, 否则会被忽略
+  waiting: 每次更新, 只触发一次微任务
+:::
+
+### flushSchedulerWueue
+```js
+  /**
+   * Flush both queues and run the watchers.
+   */
+  function flushSchedulerQueue () {
+    currentFlushTimestamp = getNow();
+    flushing = true;
+    var watcher, id;
+
+    // Sort queue before flush.
+    // This ensures that:
+    // 1. Components are updated from parent to child. (because parent is always
+    //    created before the child)
+    // 2. A component's user watchers are run before its render watcher (because
+    //    user watchers are created before the render watcher)
+    // 3. If a component is destroyed during a parent component's watcher run,
+    //    its watchers can be skipped.
+    queue.sort(function (a, b) { return a.id - b.id; });
+
+    // do not cache length because more watchers might be pushed
+    // as we run existing watchers
+    for (index = 0; index < queue.length; index++) {
+      watcher = queue[index];
+      if (watcher.before) {
+        watcher.before();
+      }
+      id = watcher.id;
+      has[id] = null;
+      watcher.run();
+      // in dev build, check and stop circular updates.
+      if (has[id] != null) {
+        circular[id] = (circular[id] || 0) + 1;
+        if (circular[id] > MAX_UPDATE_COUNT) {
+          warn(
+            'You may have an infinite update loop ' + (
+              watcher.user
+                ? ("in watcher with expression \"" + (watcher.expression) + "\"")
+                : "in a component render function."
+            ),
+            watcher.vm
+          );
+          break
+        }
+      }
+    }
+
+    // keep copies of post queues before resetting state
+    var activatedQueue = activatedChildren.slice();
+    var updatedQueue = queue.slice();
+
+    resetSchedulerState();
+    // call component updated and activated hooks
+    callActivatedHooks(activatedQueue);
+    callUpdatedHooks(updatedQueue);
+
+    // devtool hook
+    /* istanbul ignore if */
+    if (devtools && config.devtools) {
+      devtools.emit('flush');
+    }
+  }
+```
+该函数会在微任务里进行, 这里有个细节点, for循环里vue一直在获取queue.length, 因为在更新Watcher的时候可能会有新的Watcher添加进来, 这里在每次更新Watcher之后都会重新获取queue的length, 以便所有的Watcher都可以被执行到
+
+### watcher.run
+```js
+  /**
+   * Scheduler job interface.
+   * Will be called by the scheduler.
+   */
+  Watcher.prototype.run = function run () {
+    if (this.active) {
+      var value = this.get();
+      if (
+        value !== this.value ||
+        // Deep watchers and watchers on Object/Arrays should fire even
+        // when the value is the same, because the value may
+        // have mutated.
+        isObject(value) ||
+        this.deep
+      ) {
+        // set new value
+        var oldValue = this.value;
+        this.value = value;
+        if (this.user) {
+          try {
+            this.cb.call(this.vm, value, oldValue);
+          } catch (e) {
+            handleError(e, this.vm, ("callback for watcher \"" + (this.expression) + "\""));
+          }
+        } else {
+          this.cb.call(this.vm, value, oldValue);
+        }
+      }
+    }
+  };
+```
+watcher.run会重新执行get方法, 也就是依赖函数, 并且在这里会去对比新旧值，若是新旧值不同, 则会触发callback函数典型代表就是watch
 
 至此, 对象依赖收集以及派发更新讲解完成, 下面我们再回到Observer函数去讲解数组是怎么处理的
 
@@ -628,5 +693,10 @@ addDep就是Watcher下的方法
 ```
 我们可以看到Vue在这里劫持了所有会更改原数组的原型API, 在响应式数组调用这些api的时候会去触发ob.dep.notify()函数去重新触发依赖函数, 回到Observer函数我们可以看到Vue并没有去监听数组的索引, 这也是为什么array[index]
 
+### 发人深省
+::: tip 既然Vue的设计可以让data准确的知道是哪个元素发生变化, 为什么要使用VDom?
+  我们知道Watcher本身是一个实例, 它在浏览器进程里占据了一定的内存, 那么当Watcher细粒度变到Dom级别, Watcher的数量就随之变多, 性能消耗就会变大, 但是Watcher细粒度变得过高, 又会导致无法准确获取哪里发生了更新, 所以Vue将Watcher的细粒度定位在了组件, 此时结合VDom与Diff算法即可完成更新
+:::
+
 ### 总结
-本节篇幅比较长, 主要是剖析了Vue是怎么去将data选项变成响应式数据(响应式数据必须是可扩展), 响应式数据是怎么添加依赖, 又是怎么去派发更新, 数组与对象处理方式又不同, Vue通过劫持Array的prototype去处理渲染函数, 本节留下了一个分析点: 派发更新里的queueWatcher究竟是怎么实现的? 下一节nextTick函数
+本节篇幅比较长, 主要是剖析了Vue是怎么去将data选项变成响应式数据(响应式数据必须是可扩展), 响应式数据是怎么添加依赖, 又是怎么去派发更新, 数组与对象处理方式又不同, Vue通过劫持Array的prototype去处理渲染函数, 由于本篇幅比较长, 希望大家能够好好回顾下, 下一节nextTick函数

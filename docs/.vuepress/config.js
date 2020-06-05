@@ -23,7 +23,7 @@ module.exports = {
         algolia: {},
         nav: [
           { text: 'Vue2.x源码解析', link: '/' },
-          { text: 'GitHub', link: 'https://github.com/Gloomysunday28' },
+          { text: 'GitHub', link: 'https://github.com/Gloomysunday28/vue-source' },
         ],
         sidebar: [
           {
@@ -86,6 +86,10 @@ module.exports = {
               '/responsive/',
               '/responsive/initData',
               '/responsive/nextTick',
+              '/responsive/computed',
+              '/responsive/watch',
+              '/responsive/diff',
+              '/responsive/props',
             ]
           }
         ],
