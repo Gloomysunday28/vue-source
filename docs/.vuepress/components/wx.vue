@@ -15,7 +15,7 @@ export default {
 .m-wx {
   position: fixed;
   right: 20px;
-  top: 50px;
+  top: 80px;
   width: fit-content;
   height: fit-content;
   border-radius: 8px;

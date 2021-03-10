@@ -1,5 +1,3 @@
-<wx/>
-
 # Props
 我们知道Props是组件传值的一个手段, 并且props具有多种写法, 本节将会抓住以下几个点进行解析
 - props的格式化
@@ -245,3 +243,5 @@ valiadateProps调用getPropsDefaultValue函数去获取初始化值, 若default�
 props在setter函数执行的时候会提示警告, 避免开发者直接修改propsData, 我们知道Vue框架数据流props从父级传递给子级, 如果直接更改props会造成数据混淆, 出现错误无法追溯原因(但是尽管会提示, 最终propsData最终还是会被更改掉)
 
 ### props是如何
+
+<wx/>

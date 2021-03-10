@@ -1,5 +1,3 @@
-<wx/>
-
 # vue.component注册函数
 ASSERT_TYPES定义在全局运行环境下，我们先看下它的定义
 ```js
@@ -82,3 +80,5 @@ ASSERT_TYPES定义在全局运行环境下，我们先看下它的定义
   在初始化Vue.component函数时, Vue考虑到我们可能没有定义组件选项里name属性并且帮助我们初始化了一个值
   那么<font-bold color="blue">name属性有这么重要吗? 请大家带着这个疑问</font-bold>
 :::
+
+<wx/>

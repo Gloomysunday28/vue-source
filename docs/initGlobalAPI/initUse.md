@@ -1,5 +1,3 @@
-<wx/>
-
 # 初始化Vue.use
 相信大家在注册vue-router与vuex的时候都使用到了Vue.use函数, 该函数会去执行一个函数或者是对象里的install属性, 那么内部究竟是怎么样的？这篇文章将带领大家探索
 ```js
@@ -45,3 +43,5 @@
 - 判断参数是函数则直接调用，若是对象并且install的值是函数,也会调用
 - 推入Vue._installPlugins
 - <font-bold>返回Vue函数</font-bold>
+
+<wx/>

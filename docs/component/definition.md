@@ -1,5 +1,3 @@
-<wx/>
-
 # 组件Vnode
 
 <!-- ## Vue定义
@@ -264,3 +262,5 @@ render函数返回的是vnode, 也就是说createElement是返回vnode, 组件Vn
 
 ### 总结
   Vue组件Vnode创建时, 首先会去调用Vue.extend创建Vue的子类作为组件函数, 其次对data.props进行处理并赋值给propsData, 合并组件钩子函数(可以自定义钩子函数), 最后会创建组件Vnode(只有组件Vnode才会具有componentOptions属性)
+
+<wx/>

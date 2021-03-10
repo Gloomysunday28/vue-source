@@ -1,5 +1,3 @@
-<wx/>
-
 # computed计算属性
 computed特性是用来处理data, 并且返回最终的data, 最主要的是它具有lazy, 也就是说是惰性函数
 
@@ -196,3 +194,5 @@ computed特性是用来处理data, 并且返回最终的data, 最主要的是它
 
 ### 总结
 computed在初始化的时候会执行一次get函数, 随后就是由依赖的变量的更新触发computedWatcher的执行, 从而引起computed的更改, 这也是computed的魅力所在, 下一节watch的原理剖析
+
+<wx/>

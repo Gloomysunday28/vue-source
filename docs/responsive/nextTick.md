@@ -1,5 +1,3 @@
-<wx/>
-
 # nextTick -- 不一样的烟火
 我们日常见过很多使用nextTick的地方, 最主要的用途就是用来获取Dom节点, 本节旨在nextTick内部是如何去实现获取最新Dom
 
@@ -121,3 +119,5 @@ nextTick就是去执行timeFunc, 我们看下timeFunc的定义
 
 ### 总结
 本节在介绍nextTick的时候顺便讲解了相关的EventLoop与浏览器渲染机制, 这些都是可以更好的帮助我们理解为什么Vue要使用nextTick这个函数, 下一节computed
+
+<wx/>

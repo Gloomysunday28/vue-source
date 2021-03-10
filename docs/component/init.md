@@ -1,5 +1,3 @@
-<wx/>
-
 # 实例化组件
 还记得我们在说Vue初始化的时候吗, <font-bold>initLifeCyle - callHook('created', vm)</font-bold>, 我们现在来解释下这些函数作用
 ```js {9-16}
@@ -141,3 +139,5 @@
 我们得知组件实例化时会做以下的几件事:
 1. 确定父级组件实例与子级实例的关系, abstract是抽象组件, 不会被渲染到文档里
 2. vm.$createElement在创建子组件时, 会<font-bold>先去检验vm.$options是否具有该名称的组件</font-bold>, 从而决定渲不渲染组件
+
+<wx/>

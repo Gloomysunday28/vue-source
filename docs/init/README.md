@@ -1,5 +1,3 @@
-<wx/>
-
 # 初始化
 根据上篇Vue函数定义，我们开始讲解_init函数具体作用
 ```js
@@ -61,3 +59,5 @@
   - <font-bold>initLifecycle - callHook(vm, 'created')</font-bold>我会在组件篇里说明
   - <font-bold>vm.$mount是挂载Vue实例的入口函数</font-bold>, 具体我也会在组件篇的patch章节详细说明
 :::
+
+<wx/>

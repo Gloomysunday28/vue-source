@@ -1,5 +1,3 @@
-<wx/>
-
 # watch侦听属性
 watch属性对于数据的监听处理十分有用, 并且时常被拿来和computed进行比较, 本章节将从watch的源码方面入手
 
@@ -188,3 +186,5 @@ vm._watchers会在Watcher创建的时候就添加了该Watcher, 所有的Watcher
 
 ### 总结
 本章节介绍了watch的创建以及怎么收集依赖怎么去派发更新, 并且从源码的角度我们也可以发现computed与watch的区别其实不是平时我们所了解的那样, 希望大家好好回顾本章节, 下一节组件更新diff
+
+<wx/>
