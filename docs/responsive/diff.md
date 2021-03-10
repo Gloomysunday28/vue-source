@@ -1,3 +1,5 @@
+<wx/>
+
 # 组件更新
 上一章我们将组件初始化全过程讲解完, 本节将结合数据响应触发组件更新去剖析组件更新原理
 
@@ -123,4 +125,27 @@
 2. 调用createElm将新节点重新生成, 并插入到文档里, 具体的可以去深入组件章节里了解
 3. 当根节点具有parent则表示该组件是在另外一个组件的直接子级, parent指向了该组件父组件实例
 
-...未完待续
+
+## 深入diff
+Vue2.x采用的diff算法，与React不同，React Diff算法有个需要优化的地方
+React: 
+old: abcd
+new: dabc
+React的操作是将abc移动到d后面，而不是将d移动到a前面，这里一步能完成的但是分了三步
+
+Vue2.x则是采用双端对比的diff算法，每次循环对比都会分四步走:
+1. oldChildren头节点对比newChildren头节点，若是对比上了表示可以复用，那么各自将指针移动到下一步，跳出循环到下一个循环
+2. oldChildren尾节点对比newChildren尾节点，若是对比上了表示可以复用，那么各自将指针移动到上一步，跳出循环到下一个循环
+3. oldChildren头节点对比newChildren尾节点，若是对比上了表示可以复用，oldChildren往后移一步，newChildren往前移一步，此时将oldChildren里的头节点移动到oldChildren尾节点的后面，跳出循环到下一个循环
+4. oldChildren尾节点对比newChildren头节点，若是对比上了表示可以复用，oldChildren往前移一步，newChildren往后移一步，此时将oldChildren里的尾节点移动到oldChildren头节点的前面，跳出循环到下一个循环
+
+<img src="./assets/diff1.png" />
+<img src="./assets/diff2.png" />
+<img src="./assets/diff3.png" />
+
+还有一种情况就是双端检测都对比不上，如下图，那么Vue就会对newChildren头部节点进行key对比去找出oldchildren里的对应的key，也有两种情况
+1. oldChildren里存在对应的key， 将找到的节点移动到oldStartIndex前面，并将oldStartIndex往后移
+2. 不存在对应的key，直接创建一个新节点放在头部
+<img src="./assets/diff4.png" />
+
+

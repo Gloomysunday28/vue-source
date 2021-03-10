@@ -1,3 +1,5 @@
+<wx/>
+
 # 实例化组件
 还记得我们在说Vue初始化的时候吗, <font-bold>initLifeCyle - callHook('created', vm)</font-bold>, 我们现在来解释下这些函数作用
 ```js {9-16}

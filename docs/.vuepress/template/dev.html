@@ -4,8 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .m-wx {
+      position: fixed;
+      right: 10px;
+      top: 50px;
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .m-wx__img {
+      width: 80%;
+      height: 80%;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
+  <div class="m-wx">
+    <img class="m-wx__img" src="/assets/img/gzh.jpg" alt="前端马丁">
+  </div>
 </body>
 </html>

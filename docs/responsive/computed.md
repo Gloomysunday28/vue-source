@@ -1,3 +1,5 @@
+<wx/>
+
 # computed计算属性
 computed特性是用来处理data, 并且返回最终的data, 最主要的是它具有lazy, 也就是说是惰性函数
 

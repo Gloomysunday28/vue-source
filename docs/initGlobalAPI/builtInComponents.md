@@ -1,3 +1,5 @@
+<wx/>
+
 # 内部组件合并
 我们都知道在vue组件里使用组件，需要先引入组件并且注册到components属性下，否则就会报错, 那么大家是否思考过<font-bold>
   为什么keep-alive, transition, transition-group这三个组件我们不需要注册却可以直接引用?

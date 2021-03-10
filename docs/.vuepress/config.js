@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Mr.Cai - Vue Source Instroduce',
-  description: 'Vue Source Instroduce',
+  title: 'Vue源码内幕解析',
+  description: 'Vue源码内幕解析',
   base: '/vue-source/',
   themeConfig: {
     displayAllHeaders: true, // 默认值：false

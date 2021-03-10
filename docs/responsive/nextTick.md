@@ -1,3 +1,5 @@
+<wx/>
+
 # nextTick -- 不一样的烟火
 我们日常见过很多使用nextTick的地方, 最主要的用途就是用来获取Dom节点, 本节旨在nextTick内部是如何去实现获取最新Dom
 

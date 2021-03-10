@@ -1,3 +1,5 @@
+<wx/>
+
 # vue.component注册函数
 ASSERT_TYPES定义在全局运行环境下，我们先看下它的定义
 ```js

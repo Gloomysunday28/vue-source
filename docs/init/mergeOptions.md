@@ -1,4 +1,8 @@
+<wx/>
+
+
 # 合并资源
+
 Vue实例化时会将所有已有的资源进行合并并且赋值给vm.$options
 ```js
   vm.$options = mergeOptions(
